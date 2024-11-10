@@ -9,9 +9,22 @@
 // This example keeps things simple, creating only one planner
 // with pre-defined actions.
 //
-public class Goap extends Node
+public class Goap : Node
 {
-    GoapActionPlanner actionPlanner =  new GoapActionPlanner();
+    private GoapActionPlanner actionPlanner =  new GoapActionPlanner();
+    private static Goap instance = null;
+
+    public static Goap Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Goap();
+            }
+            return instance;
+        }
+    }
 
     override public void _Ready()
     {

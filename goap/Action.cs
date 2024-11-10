@@ -1,9 +1,9 @@
 //
 // Action Contract
 //
-extends Node
+using System.Collections.Generic;
 
-class GoapAction
+class GoapAction : Node
 {
 
     //
@@ -24,7 +24,7 @@ class GoapAction
     //
     // Check "./actions/chop_tree.gd" for a situational cost example.
     //
-    public int GetCost(blackboard)
+    public int GetCost(Dictionary<object, object> blackboard)
     {
         return 1000;
     }
@@ -35,7 +35,7 @@ class GoapAction
     //   "has_wood": true
     // }
     //
-    public Dictionary GetPreconditions()
+    public Dictionary<object, object> GetPreconditions()
     {
         return new Dictionary<object, object>();
     }
@@ -66,7 +66,7 @@ class GoapAction
     // or even let your NPC decide how to handle the action. In other words,
     // your NPC could just receive the action name and decide what to do.
     //
-    public bool Perform(actor, _delta)
+    public bool Perform(Node2D actor, double _delta)
     {
         return false;
     }

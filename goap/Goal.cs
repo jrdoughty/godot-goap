@@ -1,8 +1,14 @@
 //
 // Goal contract
 //
-class GoapGoal extends Node
+class GoapGoal : Node
 {
+
+
+    public string GetClazz()
+    {
+        return "GoapGoal";
+    }
 
     //
     // This indicates if the goal should be considered or not.
@@ -18,7 +24,7 @@ class GoapGoal extends Node
     // Returns goals priority. This priority can be dynamic. Check
     // `./goals/keep_fed.gd` for an example of dynamic priority.
     //
-    public in Priority()
+    public int Priority()
     {
         return 1;
     }
@@ -29,7 +35,7 @@ class GoapGoal extends Node
     //
     // For example, in your world state you may store "hunger" as a number, but inside your
     // goap you can deal with it as "is_hungry".
-    public Dictionary GetDesiredState()
+    public Dictionary<object, object> GetDesiredState()
     {
         return new Dictionary<object, object>();
     }

@@ -1,69 +1,50 @@
-//
-// This script integrates the actor (NPC) with goap.
-// In your implementation you could have this logic
-// inside your NPC script.
-//
-// As good practice, I suggest leaving it isolated like
-// this, so it makes re-use easy and it doesn't get tied
-// to unrelated implementation details (movement, collisions, etc)
+using Godot;
+using System.Collections.Generic;
 
-
-class GoapAgent extends Node
+public class GoapAgent : Node
 {
-    Goal[] goals;
-    Goal currentGoal;
-    Action[] currentPlan;
-    int currentPlanStep = 0;
+    private Goal[] goals;
+    private Goal currentGoal;
+    private List<Action> currentPlan;
+    private int currentPlanStep = 0;
+    private Node2D actor;
 
-    object actor;
-
-    //
-    // On every loop this script checks if the current goal is still
-    // the highest priority. if it's not, it requests the action planner a new plan
-    // for the new high priority goal.
-    //
-    override public void _Process(float delta)
-    {
-        Goal goal = GetBestGoal()
-        if(currentGoal == null or goal != currentGoal)
-        {
-        // You can set in the blackboard any relevant information you want to use
-        // when calculating action costs and status. I'm not sure here is the best
-        // place to leave it, but I kept here to keep things simple.
-            Dictionary<object,object> blackboard = {
-                "position": actor.position,
-                }
-
-            foreach (s in WorldState._state)
-            {
-                blackboard[s] = WorldState._state[s];
-            }
-            currentGoal = goal;
-            currentPlan = Goap.GetActionPlanner().GetPlan(currentGoal, blackboard);
-            currentPlanStep = 0;
-        }
-        else
-        {
-            FollowPlan(currentPlan, delta)
-        }
-
-    }
-    public GoapAgent(object actor, Goal[] goals)
+    public GoapAgent(Node2D actor, Goal[] goals)
     {
         this.actor = actor;
         this.goals = goals;
     }
 
+    public override void _Process(float delta)
+    {
+        Goal goal = GetBestGoal();
+        if (currentGoal == null || goal != currentGoal)
+        {
+            Dictionary<object, object> blackboard = new Dictionary<object, object>
+            {
+                { "position", actor.Position }
+            };
 
-    //
-    // Returns the highest priority goal available.
-    //
+            foreach (var state in WorldState.instance().GetState())
+            {
+                blackboard[state.Key] = state.Value;
+            }
+
+            currentGoal = goal;
+            currentPlan = Goap.instace().GetActionPlanner().GetPlan(currentGoal, blackboard);
+            currentPlanStep = 0;
+        }
+        else
+        {
+            FollowPlan(currentPlan, delta);
+        }
+    }
 
     public Goal GetBestGoal()
     {
-        var highestPriority = null;
+        Goal highestPriority = null;
 
-        foreach (var goal in goals)
+        foreach (Goal goal in goals)
         {
             if (goal.IsValid() && (highestPriority == null || goal.Priority() > highestPriority.Priority()))
             {
@@ -74,32 +55,17 @@ class GoapAgent extends Node
         return highestPriority;
     }
 
-
-    //
-    // Executes plan. This functiontion is called on every game loop.
-    // "plan" is the current list of actions, and delta is the time since last loop.
-    //
-    // Every action exposes a functiontion called perform, which will return true when
-    // the job is complete, so the agent can jump to the next action in the list.
-    //
-
-    public void FollowPlan(GoapAction[] plan, float delta)
+    private void FollowPlan(List<Action> plan, float delta)
     {
-        if (plan.Length == 0)
-        {
-            return;
-        }
-
-        if (currentPlanStep >= plan.Length)
+        if (plan.Count == 0)
         {
             return;
         }
 
         bool isStepComplete = plan[currentPlanStep].Perform(actor, delta);
-
-        if (isStepComplete && _currentPlanStep < plan.Length - 1)
+        if (isStepComplete && currentPlanStep < plan.Count - 1)
         {
-            _currentPlanStep++;
+            currentPlanStep++;
         }
     }
 }
