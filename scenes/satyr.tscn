@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://cr6noovmcl47a"]
 
-[ext_resource type="Texture2D" uid="uid://cdu4syw57sypi" path="res://sprites/satyr_.png" id="1"]
-[ext_resource type="Script" path="res://scenes/satyr.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://bhj005yas3d7l" path="res://sprites/satyr_.png" id="1"]
+[ext_resource type="Script" path="res://scenes/Satyr.cs" id="1_vr8rg"]
 
 [sub_resource type="AtlasTexture" id="9"]
 atlas = ExtResource("1")
@@ -115,7 +115,7 @@ size = Vector2(5.08686, 7.07948)
 radius = 54.6939
 
 [node name="satyr" type="CharacterBody2D"]
-script = ExtResource("2")
+script = ExtResource("1_vr8rg")
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

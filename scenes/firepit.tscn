@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://civweqo7663sk"]
 
-[ext_resource type="Texture2D" uid="uid://b153nqpuv83gr" path="res://sprites/forestDecoration_0.png" id="1"]
-[ext_resource type="Script" path="res://scenes/firepit.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://b8i15md62mfyv" path="res://sprites/forestDecoration_0.png" id="1"]
+[ext_resource type="Script" path="res://scenes/Firepit.cs" id="1_konyy"]
 
 [sub_resource type="AtlasTexture" id="1"]
 atlas = ExtResource("1")
@@ -41,7 +41,7 @@ animations = [{
 
 [node name="firepit" type="Node2D" groups=["firepit"]]
 texture_filter = 1
-script = ExtResource("2")
+script = ExtResource("1_konyy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("5")

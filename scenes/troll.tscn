@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://bnysn00thw3g2"]
 
-[ext_resource type="Texture2D" uid="uid://dg7jc6voq4lg3" path="res://sprites/troll_.png" id="1"]
-[ext_resource type="Script" path="res://scenes/troll.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://b5ceynjuylkx8" path="res://sprites/troll_.png" id="1"]
+[ext_resource type="Script" path="res://scenes/Troll.cs" id="1_olslw"]
 
 [sub_resource type="AtlasTexture" id="1"]
 atlas = ExtResource("1")
@@ -78,7 +78,7 @@ size = Vector2(5.08686, 7.07948)
 [node name="troll" type="CharacterBody2D" groups=["troll"]]
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("2")
+script = ExtResource("1_olslw")
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

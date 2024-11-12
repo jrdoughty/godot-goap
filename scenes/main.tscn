@@ -1,13 +1,13 @@
 [gd_scene load_steps=40 format=3 uid="uid://b5kiptbuouxhc"]
 
 [ext_resource type="Texture2D" uid="uid://ck4i4yq6xkq0o" path="res://sprites/forest_.png" id="1"]
+[ext_resource type="Script" path="res://scenes/Main.cs" id="1_vyyt6"]
 [ext_resource type="Texture2D" uid="uid://b8i15md62mfyv" path="res://sprites/forestDecoration_0.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://bnysn00thw3g2" path="res://scenes/troll.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cr6noovmcl47a" path="res://scenes/satyr.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://b17kgpyktoyps" path="res://scenes/tree.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://bqquv121e1b0j" path="res://scenes/wood_stock.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://b1xnqbmsxtk2j" path="res://scenes/mushroom.tscn" id="7"]
-[ext_resource type="Script" path="res://scenes/main.gd" id="8"]
 [ext_resource type="PackedScene" uid="uid://f8u5kas7gd2y" path="res://scenes/cover.tscn" id="9"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2f1t7"]
@@ -4278,7 +4278,7 @@ sources/25 = SubResource("TileSetAtlasSource_o0ei5")
 sources/26 = SubResource("TileSetAtlasSource_qcwn3")
 
 [node name="main" type="Node2D"]
-script = ExtResource("8")
+script = ExtResource("1_vyyt6")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
