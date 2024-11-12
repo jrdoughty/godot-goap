@@ -16,6 +16,7 @@ namespace CSGoap
 
 		public List<GoapAction> GetPlan(GoapGoal goal, Dictionary<object, object> blackboard = null)
 		{
+			GD.Print("planning!");
 			if (blackboard == null)
 			{
 				blackboard = new Dictionary<object, object>();
@@ -126,7 +127,6 @@ namespace CSGoap
 
 				current = nextStep;
 			}
-
 			return plan.ToList();
 		}
 	}

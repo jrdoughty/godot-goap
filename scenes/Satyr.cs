@@ -21,6 +21,17 @@ namespace CSGoap
 			_hungryLabel = GetNode<Label>(HungryLabelPath);
 			_body = GetNode<AnimatedSprite2D>(BodyPath);
 			_calmDownTimer = GetNode<Timer>(CalmDownTimerPath);
+			GoapGoal[] goals = new GoapGoal[]
+			{
+				new KeepFirepitBurningGoal(),
+				new KeepFedGoal(),
+				new CalmDownGoal(),
+				new RelaxGoal()
+			};
+			GoapAgent agent = new GoapAgent(this,goals);
+
+			
+			AddChild(agent);
 		}
 
 		public override void _Process(double delta)
