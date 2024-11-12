@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class FindCoverAction : GoapAction
+    public partial class FindCoverAction : GoapAction
     {
         public override string GetClazz()
         {

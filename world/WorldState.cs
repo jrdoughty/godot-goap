@@ -1,36 +1,28 @@
 namespace CSGoap
 {
-   
     using Godot;
     using System.Collections.Generic;
 
-    class WorldState : Node
+    public partial class WorldState : Node
     {
-        Dictionary<object, object> state = new Dictionary<object, object>();
+        public Dictionary<object, object> state = new Dictionary<object, object>();
         private static WorldState instance = null;
 
         public static WorldState Instance
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new WorldState();
-                }
+                instance ??= new WorldState();
                 return instance;
             }
         }
 
-        public object GetState(object state_name, object default_value = null)
+        public override void _Ready()
         {
-            if (state.TryGetValue(state_name, out var value))
-            {
-                return value;
-            }
-            return default_value;
+            instance = this;
         }
 
-        public void SetState(object state_name, object value)
+        public object GetState(object stateName, object defaultValue = null)
         {
             if (state.TryGetValue(stateName, out var value))
             {
@@ -39,37 +31,33 @@ namespace CSGoap
             return defaultValue;
         }
 
+        public void SetState(object stateName, object value)
+        {
+            state[stateName] = value;
+        }
+
         public void ClearState()
         {
-            state = new Dictionary<object, object>();
+            state.Clear();
         }
 
-        public Node[] GetElements(string group_name)
+        public Godot.Collections.Array<Godot.Node> GetElements(string groupName)
         {
-            return GetTree().GetNodesInGroup(group_name);
+            return GetTree().GetNodesInGroup(groupName);
         }
 
-        public Node GetClosestElement(string group_name, Node2D reference)
+        public Node2D GetClosestElement(string groupName, Node2D reference)
         {
-            List<Node2D> elements = new List<Node2D>();
-            Node[] elnts = GetElements(group_name);
-            foreach (Node el in elnts)
-            {
-                if (!(el is Node2D))
-                {
-                    continue;
-                }
-                elements.Add(el as Node2D);
-            }
+            var elements = GetElements(groupName);
             Node2D closestElement = null;
-            float closest_distance = float.MaxValue;
+            float closestDistance = float.MaxValue;
 
             foreach (Node2D element in elements)
             {
-                var distance = reference.Position.DistanceTo(element.Position);
-                if (distance < closest_distance)
+                float distance = reference.Position.DistanceTo(element.Position);
+                if (distance < closestDistance)
                 {
-                    closest_distance = distance;
+                    closestDistance = distance;
                     closestElement = element;
                 }
             }
@@ -77,17 +65,16 @@ namespace CSGoap
             return closestElement;
         }
 
-        public void ConsoleMessage(object message)
+        public void ConsoleMessage(string message)
         {
-            TextEdit console = GetTree().GetNodesInGroup("console")[0] as TextEdit;
+            var console = GetTree().GetNodesInGroup("console")[0] as Node;
             if (console != null)
             {
-                console.Text += "\n" + message.ToString();
-                console.CaretLine = console.GetLineCount();
-            }
-            else
-            {
-                GD.Print("no on-screen debug console found");
+                var method = console.GetType().GetMethod("AddMessage");
+                if (method != null)
+                {
+                    method.Invoke(console, new object[] { message });
+                }
             }
         }
     }

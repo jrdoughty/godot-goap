@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class CalmDownGoal : GoapGoal
+    public partial class CalmDownGoal : GoapGoal
     {
         public override string GetClazz()
         {

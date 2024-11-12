@@ -14,7 +14,7 @@ func _ready():
 func _process(delta):
 	if self.position.distance_to(_target) > 1 :
 		var direction = self.position.direction_to(_target)
-		if direction.x > 0:
+		if direction.X > 0:
 			turn_right()
 		else:
 			turn_left()

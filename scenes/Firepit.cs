@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System;
 
-    public class Firepit : Node2D
+    public partial class Firepit : Node2D
     {
         [Export] private NodePath labelPath;
         [Export] private NodePath timerPath;

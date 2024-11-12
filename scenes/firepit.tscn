@@ -42,6 +42,8 @@ animations = [{
 [node name="firepit" type="Node2D" groups=["firepit"]]
 texture_filter = 1
 script = ExtResource("1_konyy")
+labelPath = NodePath("label")
+timerPath = NodePath("timer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("5")

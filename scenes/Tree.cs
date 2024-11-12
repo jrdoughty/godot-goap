@@ -1,7 +1,7 @@
 namespace CSGoap
 {
    using Godot;
-    public class Tree : StaticBody2D
+    public partial class Tree : StaticBody2D
     {    
         [Export] private int hp = 3;
         [Export] private NodePath chopCooldownPath;

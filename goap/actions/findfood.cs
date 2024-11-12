@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class FindFoodAction : GoapAction
+    public partial class FindFoodAction : GoapAction
     {
         public override string GetClazz()
         {

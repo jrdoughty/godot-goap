@@ -116,6 +116,9 @@ radius = 54.6939
 
 [node name="satyr" type="CharacterBody2D"]
 script = ExtResource("1_vr8rg")
+HungryLabelPath = NodePath("labels/labels/hungry_label")
+BodyPath = NodePath("body")
+CalmDownTimerPath = NodePath("calm_down_timer")
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

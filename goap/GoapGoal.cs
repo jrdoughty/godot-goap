@@ -5,7 +5,7 @@ namespace CSGoap
     //
     using Godot;
     using System.Collections.Generic;
-    public class GoapGoal : Node
+    public partial class GoapGoal : Node
     {
 
 

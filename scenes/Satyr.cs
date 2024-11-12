@@ -3,14 +3,14 @@ namespace CSGoap
 	using Godot;
 	using System;
 
-	public class Satyr : KinematicBody2D
+	public partial class Satyr : CharacterBody2D
 	{
 		[Export] public NodePath HungryLabelPath;
 		[Export] public NodePath BodyPath;
 		[Export] public NodePath CalmDownTimerPath;
 
 		private Label _hungryLabel;
-		private AnimatedSprite _body;
+		private AnimatedSprite2D _body;
 		private Timer _calmDownTimer;
 
 		private bool isAttacking = false;
@@ -19,11 +19,11 @@ namespace CSGoap
 		public override void _Ready()
 		{
 			_hungryLabel = GetNode<Label>(HungryLabelPath);
-			_body = GetNode<AnimatedSprite>(BodyPath);
+			_body = GetNode<AnimatedSprite2D>(BodyPath);
 			_calmDownTimer = GetNode<Timer>(CalmDownTimerPath);
 		}
 
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
 			_hungryLabel.Visible = (int)WorldState.Instance.GetState("hunger", 0) >= 50;
 
@@ -41,12 +41,12 @@ namespace CSGoap
 			}
 		}
 
-		public void MoveTo(Vector2 direction, float delta)
+		public void MoveTo(Vector2 direction, double delta)
 		{
 			isMoving = true;
 			isAttacking = false;
 			_body.Play("run");
-			if (direction.x > 0)
+			if (direction.X > 0)
 			{
 				TurnRight();
 			}
@@ -55,7 +55,7 @@ namespace CSGoap
 				TurnLeft();
 			}
 
-			MoveAndCollide(direction * delta * 100);
+			MoveAndCollide(direction * (float)delta * 100);
 		}
 
 		private void TurnRight()

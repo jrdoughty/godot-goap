@@ -4,7 +4,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class KeepFedGoal : GoapGoal
+    public partial class KeepFedGoal : GoapGoal
     {
         public override string GetClazz()
         {
@@ -14,7 +14,7 @@ namespace CSGoap
         // This is not a valid goal when hunger is less than 50.
         public override bool IsValid()
         {
-            return (int)WorldState.Instance.GetState("hunger", 0) > 50 && WorldState.Instance.GetElements("food").Length > 0;
+            return (int)WorldState.Instance.GetState("hunger", 0) > 50 && WorldState.Instance.GetElements("food").Count > 0;
         }
 
         public override int Priority()

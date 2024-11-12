@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System;
 
-    public class Troll : CharacterBody2D
+    public partial class Troll : CharacterBody2D
     {
         private Vector2 _target;
         [Export] private NodePath bodyPath;
@@ -29,7 +29,7 @@ namespace CSGoap
             if (Position.DistanceTo(_target) > 1)
             {
                 Vector2 direction = Position.DirectionTo(_target);
-                if (direction.x > 0)
+                if (direction.X > 0)
                 {
                     TurnRight();
                 }
@@ -38,7 +38,7 @@ namespace CSGoap
                     TurnLeft();
                 }
 
-                MoveAndCollide(direction * delta * 100);
+                MoveAndCollide(direction * (float)delta * 100);
             }
             else
             {

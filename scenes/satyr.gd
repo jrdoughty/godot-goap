@@ -48,7 +48,7 @@ func move_to(direction, delta):
 	is_moving = true
 	is_attacking = false
 	$body.play("run")
-	if direction.x > 0:
+	if direction.X > 0:
 		turn_right()
 	else:
 		turn_left()

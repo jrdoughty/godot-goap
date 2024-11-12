@@ -3,7 +3,7 @@ namespace CSGoap
     using Godot;
     using System;
 
-    public class Main : Node2D
+    public partial class Main : Node2D
     {
         private ProgressBar _hungerField;
 

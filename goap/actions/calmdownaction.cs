@@ -4,7 +4,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class CalmDownAction : GoapAction
+    public partial class CalmDownAction : GoapAction
     {
         public override string GetClazz()
         {

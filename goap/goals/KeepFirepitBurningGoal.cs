@@ -4,7 +4,7 @@ namespace CSGoap
     using Godot;
     using System.Collections.Generic;
 
-    public class KeepFirepitBurningGoal : GoapGoal
+    public partial class KeepFirepitBurningGoal : GoapGoal
     {
         public override string GetClazz()
         {

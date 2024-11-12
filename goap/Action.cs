@@ -6,7 +6,7 @@ namespace CSGoap
     using System.Collections.Generic;
     using Godot;
 
-    public class GoapAction : Node
+    public partial class GoapAction : Node
     {
 
         public virtual string GetClazz()
