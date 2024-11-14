@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Godot",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "C:/Users/John/Documents/Godot_v4.3-stable_mono_win64/Godot_v4.3-stable_mono_win64.exe",
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "args": [
+                "--path",
+                "${workspaceRoot}"
+            ],
+            "preLaunchTask": "Build Godot C# Project"
+        }
+    ]
+}

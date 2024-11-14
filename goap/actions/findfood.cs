@@ -1,6 +1,7 @@
 namespace CSGoap
 {
     using Godot;
+    using System;
     using System.Collections.Generic;
 
     public partial class FindFoodAction : GoapAction
@@ -39,7 +40,8 @@ namespace CSGoap
 
             if (closestFood.Position.DistanceTo(actor.Position) < 5)
             {
-                WorldState.Instance.SetState("hunger", (int)WorldState.Instance.GetState("hunger") - (int)((dynamic)closestFood).Nutrition);
+                double hunger = (double)WorldState.Instance.GetState("hunger");
+                WorldState.Instance.SetState("hunger", hunger - (closestFood as Mushroom).nutrition);
                 closestFood.QueueFree();
                 return true;
             }

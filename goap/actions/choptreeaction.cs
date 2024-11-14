@@ -2,6 +2,7 @@ namespace CSGoap
 {
 
 	using Godot;
+	using System;
 	using System.Collections.Generic;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace CSGoap
 			if (blackboard.ContainsKey("position"))
 			{
 				Node2D closestTree = WorldState.Instance.GetClosestElement("tree", (Node2D)blackboard["position"]) as Node2D;
-				return (int)(closestTree.Position.DistanceTo(((Node2D)blackboard["position"]).Position) / 7);
+				return Convert.ToInt32(closestTree.Position.DistanceTo(((Node2D)blackboard["position"]).Position) / 7);
 			}
 			return 3;
 		}

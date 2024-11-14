@@ -46,18 +46,18 @@ namespace CSGoap
 
 			foreach (GoapGoal goal in goals)
 			{
+				//GD.Print($"Best goal: {goal.GetClazz()} {goal.IsValid()}");
 				if (goal.IsValid() && (highestPriority == null || goal.Priority() > highestPriority.Priority()))
 				{
 					highestPriority = goal;
 				}
 			}
-
 			return highestPriority;
 		}
 
 		private void FollowPlan(List<GoapAction> plan, double delta)
 		{
-			if (plan.Count == 0)
+			if (plan == null || plan.Count == 0)
 			{
 				return;
 			}

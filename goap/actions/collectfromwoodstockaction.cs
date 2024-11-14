@@ -2,7 +2,8 @@ namespace CSGoap
 {
    
 	using Godot;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
 	public partial class CollectFromWoodStockAction : GoapAction
 	{
@@ -21,7 +22,7 @@ namespace CSGoap
 			if (blackboard.ContainsKey("position"))
 			{
 				Node2D closestTree = WorldState.Instance.GetClosestElement("wood_stock", (Node2D)blackboard["position"]);
-				return (int)(closestTree.Position.DistanceTo(((Node2D)blackboard["position"]).Position) / 5);
+				return Convert.ToInt32(closestTree.Position.DistanceTo(((Node2D)blackboard["position"]).Position) / 5);
 			}
 			return 5;
 		}

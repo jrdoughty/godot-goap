@@ -36,7 +36,7 @@ namespace CSGoap
 
 		public override void _Process(double delta)
 		{
-			_hungryLabel.Visible = (int)WorldState.Instance.GetState("hunger", 0) >= 50;
+			_hungryLabel.Visible = Convert.ToInt32(WorldState.Instance.GetState("hunger", 0)) >= 50;
 
 			if (isAttacking)
 			{

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b5kiptbuouxhc"]
+[gd_scene load_steps=41 format=3 uid="uid://b5kiptbuouxhc"]
 
 [ext_resource type="Texture2D" uid="uid://ck4i4yq6xkq0o" path="res://sprites/forest_.png" id="1"]
 [ext_resource type="Script" path="res://scenes/Main.cs" id="1_vyyt6"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bqquv121e1b0j" path="res://scenes/wood_stock.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://b1xnqbmsxtk2j" path="res://scenes/mushroom.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://f8u5kas7gd2y" path="res://scenes/cover.tscn" id="9"]
+[ext_resource type="Script" path="res://world/WorldState.cs" id="10_iwu15"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2f1t7"]
 texture = ExtResource("1")
@@ -4462,7 +4463,10 @@ position = Vector2(230, 230)
 [node name="firepit_spot" type="Marker2D" parent="." groups=["firepit_spot"]]
 position = Vector2(189.468, 165.449)
 
-[connection signal="timeout" from="hunger_timer" to="." method="_on_hanger_timer_timeout"]
+[node name="WorldState" type="Node" parent="."]
+script = ExtResource("10_iwu15")
+
+[connection signal="timeout" from="hunger_timer" to="." method="OnHungerTimerTimeout"]
 [connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/reload" to="." method="_on_reload_pressed"]
 [connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/console" to="." method="_on_console_pressed"]

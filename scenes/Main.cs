@@ -14,10 +14,10 @@ namespace CSGoap
 
         private void OnHungerTimerTimeout()
         {
-            _hungerField.Value = (int)WorldState.Instance.GetState("hunger", 0);
+            _hungerField.Value = Convert.ToInt32(WorldState.Instance.GetState("hunger", 0));
             if (_hungerField.Value < 100)
             {
-                _hungerField.Value += 2;
+                _hungerField.Value += 25;
             }
 
             WorldState.Instance.SetState("hunger", _hungerField.Value);

@@ -1,6 +1,8 @@
 namespace CSGoap
 {
     using Godot;
+    using System;
+
     using System.Collections.Generic;
 
     public partial class WorldState : Node
@@ -67,14 +69,13 @@ namespace CSGoap
 
         public void ConsoleMessage(string message)
         {
-            var console = GetTree().GetNodesInGroup("console")[0] as Node;
+            SceneTree sceneTree = GetTree();
+            Godot.Collections.Array<Node> nodes = sceneTree.GetNodesInGroup("console");
+            TextEdit console = nodes[0] as TextEdit;
             if (console != null)
             {
-                var method = console.GetType().GetMethod("AddMessage");
-                if (method != null)
-                {
-                    method.Invoke(console, new object[] { message });
-                }
+                console.Text += message + "\n";
+                console.SetCaretLine(console.GetLineCount());
             }
         }
     }

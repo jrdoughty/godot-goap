@@ -55,7 +55,7 @@ func _find_best_plan(goal, desired_state, blackboard):
 # actions included in the cheapest one.
 #
 func _get_cheapest_plan(plans):
-	var best_plan
+	var best_plan = null
 	for p in plans:
 		_print_plan(p)
 		if best_plan == null or p.cost < best_plan.cost:
