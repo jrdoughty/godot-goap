@@ -2,15 +2,18 @@
 
 ![Screenshot](./screenshot.png)
 
-This is the GOAP example implemented for [this video](https://youtu.be/LhnlNKWh7oc). If you have any comments and suggestion that video's comments section may
-be the best place for them.
+This is the GOAP example implemented for [this video](https://youtu.be/LhnlNKWh7oc). If you have any comments and suggestion that video's comments section may be the best place for them.
+
+
+John: This is the C# version I made to work more easily along with my C# projects. The rest of the Readme is mostly what was part of the project before. I'll be making a version that more accurately reflects what I built in Shotcaller: https://github.com/jrdoughty/shotcaller-godot 
+
 
 This is a personal experiment not tested in high load scenarios.
 The code is fully documented to explain the reasoning behind the implementation.
 
 You can find a live demo [here](https://viniciusgerevini.github.io/godot-goap).
 
-The main branch works on Godot 4. For Godot 3, check the [godot_3](https://github.com/viniciusgerevini/godot-goap/tree/godot_3) branch. Godot 3 is the version shown in the demo video.
+The main branch works on Godot 4. For GDscript:(https://github.com/viniciusgerevini/godot-goap/tree/74d61fd200b501b49008d196ac2632fdee9452f2). For Godot 3, check the [godot_3](https://github.com/viniciusgerevini/godot-goap/tree/godot_3) branch. Godot 3 is the version shown in the demo video.
 
 ## What the example does
 
@@ -30,10 +33,10 @@ too close to the Satyr, they enter in a frightned state.
 
 You can find all actions available at `./goap/actions/` and goals at `./goap/goals/`.
 
-The `GoapAgent`(`./goap/agent.gd`) class integrates the NPC with the planner. It is responsible by requesting
+The `GoapAgent`(`./goap/GoapAgent.cs`) class integrates the NPC with the planner. It is responsible by requesting
 plans and making sure the highest priority goal is being handled.
 
-The `GoapActionPlanner`(`./goap/action_planner.gd`) is the heart of this implementation. When a plan is requested it first
+The `GoapActionPlanner`(`./goap/GoapActionPlanner.cs`) is the heart of this implementation. When a plan is requested it first
 creates a graph with all valid paths. Then it walks the graph building plans (list of actions) while summing their costs.
 Finally, it returns the cheapest plan, which is executed by the agent.
 
