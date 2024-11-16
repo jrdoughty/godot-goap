@@ -165,5 +165,5 @@ visible = false
 layout_mode = 2
 text = "Afraid"
 
-[connection signal="body_entered" from="detection_radius" to="." method="_on_detection_radius_body_entered"]
-[connection signal="timeout" from="calm_down_timer" to="." method="_on_calm_down_timer_timeout"]
+[connection signal="body_entered" from="detection_radius" to="." method="OnDetectionRadiusBodyEntered"]
+[connection signal="timeout" from="calm_down_timer" to="." method="OnCalmDownTimerTimeout"]

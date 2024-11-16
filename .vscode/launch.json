@@ -13,7 +13,17 @@
                 "--path",
                 "${workspaceRoot}"
             ],
-            "preLaunchTask": "Build Godot C# Project"
+            "preLaunchTask": "Build Godot C# Project",
+            "justMyCode": false,
+            "symbolOptions": {
+                "searchMicrosoftSymbolServer": true
+            },
+            "logging": {
+                "moduleLoad": false,
+                "engineLogging": false,
+                "programOutput": true,
+                "exceptions": true
+            }
         }
     ]
 }

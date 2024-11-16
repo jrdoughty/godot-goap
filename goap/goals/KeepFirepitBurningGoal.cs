@@ -13,7 +13,7 @@ namespace CSGoap
 
         public override bool IsValid()
         {
-            return (bool)WorldState.Instance.GetState("has_firepit", false);
+	        return WorldState.Instance.GetElements("firepit").Count == 0;
         }
 
         public override int Priority()

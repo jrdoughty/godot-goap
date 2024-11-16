@@ -112,7 +112,7 @@ namespace CSGoap
 			return false;
 		}
 
-		private void _OnDetectionRadiusBodyEntered(Node body)
+		private void OnDetectionRadiusBodyEntered(Node body)
 		{
 			if (body.IsInGroup("troll"))
 			{
@@ -120,7 +120,7 @@ namespace CSGoap
 			}
 		}
 
-		private void _OnCalmDownTimerTimeout()
+		private void OnCalmDownTimerTimeout()
 		{
 			WorldState.Instance.SetState("is_frightened", false);
 		}

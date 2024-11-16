@@ -102,4 +102,4 @@ collision_mask = 6
 wait_time = 3.0
 one_shot = true
 
-[connection signal="timeout" from="rest_timer" to="." method="_on_rest_timer_timeout"]
+[connection signal="timeout" from="rest_timer" to="." method="OnRestTimerTimeout"]

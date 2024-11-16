@@ -17,7 +17,7 @@ namespace CSGoap
             _hungerField.Value = Convert.ToInt32(WorldState.Instance.GetState("hunger", 0));
             if (_hungerField.Value < 100)
             {
-                _hungerField.Value += 25;
+                _hungerField.Value += 2;
             }
 
             WorldState.Instance.SetState("hunger", _hungerField.Value);
@@ -41,7 +41,7 @@ namespace CSGoap
         {
             var console = GetTree().GetNodesInGroup("console")[0] as Control;
             console.Visible = !console.Visible;
-            GetNode<Label>("HUD/VBoxContainer/MarginContainer/HBoxContainer/console").Text = (
+            GetNode<Button>("HUD/VBoxContainer/MarginContainer/HBoxContainer/console").Text = (
                 console.Visible ? "Hide Console" : "Show Console"
             );
         }

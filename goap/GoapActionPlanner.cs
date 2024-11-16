@@ -2,7 +2,10 @@ namespace CSGoap
 {
    
 	using Godot;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
     using System.Linq;
 
     public partial class GoapActionPlanner : Node
@@ -12,6 +15,7 @@ namespace CSGoap
 		public void SetActions(GoapAction[] actions)
 		{
 			this.actions = actions;
+			GD.Print("Actions set");
 		}
 
 		public List<GoapAction> GetPlan(GoapGoal goal, Dictionary<object, object> blackboard = null)
@@ -31,17 +35,18 @@ namespace CSGoap
 			{
 				return new List<GoapAction>();
 			}
-
-			return FindBestPlan(goal, desiredState, blackboard);
+			var plan = FindBestPlan(goal, desiredState, blackboard);
+			PrintPlan(plan);
+			return plan;
 		}
 
 		private List<GoapAction> FindBestPlan(GoapGoal goal, Dictionary<object, object> desiredState, Dictionary<object, object> blackboard)
 		{
-			var root = new Dictionary<string, object>
+			var root = new Dictionary<object, object>
 			{
 				{ "action", goal },
 				{ "state", desiredState },
-				{ "children", new List<Dictionary<string, object>>() }
+				{ "children", new List<Dictionary<object, object>>() }
 			};
 
 			if (BuildPlans(root, new Dictionary<object, object>(blackboard)))
@@ -52,82 +57,96 @@ namespace CSGoap
 			return new List<GoapAction>();
 		}
 
-		private bool BuildPlans(Dictionary<string, object> root, Dictionary<object, object> blackboard)
+		private bool BuildPlans(Dictionary<object, object> root, Dictionary<object, object> blackboard)
 		{
-			var steps = new Stack<Dictionary<string, object>>();
-			steps.Push(root);
+			GD.Print("Building plans");
+			bool hasFollowUp = false;
 
-			while (steps.Count > 0)
+			Dictionary<object, object> state = new Dictionary<object, object>(root["state"] as Dictionary<object, object>);
+			
+			foreach( KeyValuePair<Object,Object> s in root["state"] as Dictionary<object, object>)
 			{
-				var step = steps.Pop();
-				var action = step["action"] as GoapAction;
-				var state = step["state"] as Dictionary<object, object>;
-				var children = step["children"] as List<Dictionary<string, object>>;
-
-				foreach (var a in actions)
+				if(state.ContainsKey(s.Key) && blackboard.ContainsKey(s.Key) && state[s.Key].Equals(blackboard[s.Key]))
 				{
-					if (!a.IsValid())
-					{
-						continue;
-					}
+					state.Remove(s.Key);
+				}
+			}
+			if (state.Count == 0)
+			{
+				return true;
+			}
+			foreach (GoapAction a in this.actions)
+			{
+				if (!a.IsValid())
+				{
+					continue;
+				}
 
+				bool shouldUseAction = false;
+				Dictionary<object,object> effects = a.GetEffects();
+				var desiredState = new Dictionary<object, object>(state);
+				foreach (KeyValuePair<object,object> s in desiredState)
+				{
+					if (effects.ContainsKey(s.Key) && effects[s.Key].Equals(s.Value))
+					{
+						shouldUseAction = true;
+						desiredState.Remove(s.Key);
+					}
+				}
+
+				if (shouldUseAction)
+				{
 					var preconditions = a.GetPreconditions();
-					var effects = a.GetEffects();
-
-					if (Satisfies(state, preconditions))
+					foreach (KeyValuePair<object, object> p in preconditions)
 					{
-						var newState = new Dictionary<object, object>(state);
-						foreach (var key in effects.Keys)
-						{
-							newState[key] = effects[key];
-						}
-
-						var newStep = new Dictionary<string, object>
-						{
-							{ "action", a },
-							{ "state", newState },
-							{ "children", new List<Dictionary<string, object>>() }
-						};
-						children.Add(newStep);
-						steps.Push(newStep);
+						desiredState[p.Key] = p.Value;
+					}
+					Dictionary<object, object> s = new Dictionary<object, object>{
+						{ "action", a }, 
+						{ "state", desiredState }, 
+						{ "children", new List<Dictionary<object, object>>() }
+					};
+					foreach (KeyValuePair<object, object> d in desiredState)
+					{
+						GD.Print($"Desired state: {d.Key} {d.Value}");
+					}
+					if(desiredState.Count == 0 || BuildPlans(s, new Dictionary<object, object>(blackboard)))
+					{
+						(root["children"] as List<Dictionary<object, object>>).Add(s);
+						hasFollowUp = true;
 					}
 				}
 			}
-
 			return true;
 		}
 
-		private bool Satisfies(Dictionary<object, object> state, Dictionary<object, object> preconditions)
-		{
-			foreach (var precondition in preconditions)
-			{
-				if (!state.ContainsKey(precondition.Key) || !state[precondition.Key].Equals(precondition.Value))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-		private List<GoapAction> ExtractPlan(Dictionary<string, object> root)
+		private List<GoapAction> ExtractPlan(Dictionary<object, object> root)
 		{
 			var plan = new List<GoapAction>();
 			var current = root;
 
-			while (current != null && current.ContainsKey("children") && (current["children"] as List<Dictionary<string, object>>).Count > 0)
+			while (current != null && current.ContainsKey("children") && (current["children"] as List<Dictionary<object, object>>).Count > 0)
 			{
-				var children = current["children"] as List<Dictionary<string, object>>;
+				var children = current["children"] as List<Dictionary<object, object>>;
 				var nextStep = children[0]; // Assuming the first child is the next step in the plan
 				var action = nextStep["action"] as GoapAction;
 
 				if (action != null)
 				{
-					plan.Add(action);
+					plan.Insert(0,action);
 				}
 
 				current = nextStep;
 			}
 			return plan.ToList();
+		}
+
+		public void PrintPlan(List<GoapAction> plan)
+		{
+			foreach (GoapAction a in plan)
+			{
+				GD.Print("Print plan"+a.GetClazz());
+			}
 		}
 	}
 }

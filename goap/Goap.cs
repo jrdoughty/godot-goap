@@ -30,7 +30,7 @@ namespace CSGoap
 			}
 		}
 
-		override public void _Ready()
+		public Goap()
 		{
 			actionPlanner.SetActions(new GoapAction[] {
 				new BuildFirepitAction(),

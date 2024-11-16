@@ -4466,7 +4466,9 @@ position = Vector2(189.468, 165.449)
 [node name="WorldState" type="Node" parent="."]
 script = ExtResource("10_iwu15")
 
+[node name="Goap" type="Node" parent="."]
+
 [connection signal="timeout" from="hunger_timer" to="." method="OnHungerTimerTimeout"]
-[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/reload" to="." method="_on_reload_pressed"]
-[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/pause" to="." method="_on_pause_pressed"]
-[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/console" to="." method="_on_console_pressed"]
+[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/reload" to="." method="OnReloadPressed"]
+[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/pause" to="." method="OnPausePressed"]
+[connection signal="pressed" from="HUD/VBoxContainer/MarginContainer/HBoxContainer/console" to="." method="OnConsolePressed"]
