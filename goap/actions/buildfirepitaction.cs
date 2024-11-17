@@ -49,7 +49,7 @@ namespace CSGoap
 				actor.GetParent().AddChild(firepit);
 				firepit.Position = closestSpot.Position;
 				firepit.ZIndex = closestSpot.ZIndex;
-				WorldState.Instance.SetState("has_wood", false);
+				(actor as Satyr).agent.SetState("has_wood", false);
 				return true;
 			}
 
