@@ -7,11 +7,13 @@ namespace CSGoap
 	public partial class Satyr : CharacterBody2D
 	{
 		[Export] public NodePath HungryLabelPath;
+		[Export] public NodePath AfraidLabelPath;
 		[Export] public NodePath BodyPath;
 		[Export] public NodePath CalmDownTimerPath;
 		[Export] public NodePath AgentPath;
 
 		private Label _hungryLabel;
+		private Label _afraidLabel;
 		private AnimatedSprite2D _body;
 		private Timer _calmDownTimer;
 
@@ -23,6 +25,7 @@ namespace CSGoap
 
 		public override void _Ready()
 		{
+			_afraidLabel = GetNode<Label>(AfraidLabelPath);
 			_hungryLabel = GetNode<Label>(HungryLabelPath);
 			_body = GetNode<AnimatedSprite2D>(BodyPath);
 			_calmDownTimer = GetNode<Timer>(CalmDownTimerPath);
@@ -33,6 +36,7 @@ namespace CSGoap
 		public override void _Process(double delta)
 		{
 			_hungryLabel.Visible = Convert.ToInt32(agent.GetState("hunger", 0)) >= 50;
+			_afraidLabel.Visible = (bool)(agent.GetState("is_frightened", false));
 
 			if (isAttacking)
 			{
@@ -95,7 +99,7 @@ namespace CSGoap
 
 		public bool CalmDown()
 		{
-			if (!(bool)WorldState.Instance.GetState("is_frightened"))
+			if (!(bool)agent.GetState("is_frightened", false))
 			{
 				return true;
 			}
@@ -112,13 +116,13 @@ namespace CSGoap
 		{
 			if (body.IsInGroup("troll"))
 			{
-				WorldState.Instance.SetState("is_frightened", true);
+				agent.SetState("is_frightened", true);
 			}
 		}
 
 		private void OnCalmDownTimerTimeout()
 		{
-			WorldState.Instance.SetState("is_frightened", false);
+			agent.SetState("is_frightened", false);
 		}
 	}
 }

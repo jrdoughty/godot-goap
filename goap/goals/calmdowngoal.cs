@@ -12,7 +12,7 @@ namespace CSGoap
 
         public override bool IsValid(GoapAgent agent)
         {
-            return (bool)WorldState.Instance.GetState("is_frightened", false);
+            return (bool)agent.GetState("is_frightened", false);
         }
 
         public override int Priority(GoapAgent agent)

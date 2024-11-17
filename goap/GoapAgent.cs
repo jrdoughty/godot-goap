@@ -19,7 +19,7 @@ namespace CSGoap
 		public void SetActions(List<GoapAction> actions)
 		{
 			this.actions = actions;
-			GD.Print("Actions set");
+			//GD.Print("Actions set");
 		}
 
 		public object GetState(object key, object defaultValue = null)
@@ -27,10 +27,6 @@ namespace CSGoap
 			if (state.ContainsKey(key))
 			{
 				return state[key];
-			}
-			else if (defaultValue != null)
-			{
-				state[key] = defaultValue;
 			}
 						
 			return defaultValue;
@@ -49,12 +45,10 @@ namespace CSGoap
 			actions = new List<GoapAction>();
 			foreach (var goal in GetNode<Node>("goals").GetChildren())
 			{
-				GD.Print(goal);
 				goals.Add(goal as GoapGoal);
 			}
 			foreach (var action in GetNode<Node>("actions").GetChildren())
 			{
-				GD.Print(action);
 				actions.Add(action as GoapAction);
 			}
 			
