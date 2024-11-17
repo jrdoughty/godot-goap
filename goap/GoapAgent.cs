@@ -45,6 +45,19 @@ namespace CSGoap
 		public override void _Ready()
 		{
 			actor = GetParent<Node2D>();
+			goals = new List<GoapGoal>();
+			actions = new List<GoapAction>();
+			foreach (var goal in GetNode<Node>("goals").GetChildren())
+			{
+				GD.Print(goal);
+				goals.Add(goal as GoapGoal);
+			}
+			foreach (var action in GetNode<Node>("actions").GetChildren())
+			{
+				GD.Print(action);
+				actions.Add(action as GoapAction);
+			}
+			
 		}
 		public void SetGoals(List<GoapGoal> goals)
 		{

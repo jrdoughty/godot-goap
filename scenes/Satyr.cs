@@ -27,20 +27,6 @@ namespace CSGoap
 			_body = GetNode<AnimatedSprite2D>(BodyPath);
 			_calmDownTimer = GetNode<Timer>(CalmDownTimerPath);
 			agent = GetNode<GoapAgent>(AgentPath) as GoapAgent;
-			goals = new List<GoapGoal>();
-			actions = new List<GoapAction>();
-			foreach (var goal in GetNode<Node>("agent/goals").GetChildren())
-			{
-				GD.Print(goal);
-				goals.Add(goal as GoapGoal);
-			}
-			foreach (var action in GetNode<Node>("agent/actions").GetChildren())
-			{
-				GD.Print(action);
-				actions.Add(action as GoapAction);
-			}
-			agent.SetGoals(goals);
-			agent.SetActions(actions);
 			
 		}
 
