@@ -2,12 +2,14 @@ namespace CSGoap
 {
 	using Godot;
 	using System;
+	using System.Collections.Generic;
 
 	public partial class Satyr : CharacterBody2D
 	{
 		[Export] public NodePath HungryLabelPath;
 		[Export] public NodePath BodyPath;
 		[Export] public NodePath CalmDownTimerPath;
+		[Export] public NodePath AgentPath;
 
 		private Label _hungryLabel;
 		private AnimatedSprite2D _body;
@@ -15,28 +17,36 @@ namespace CSGoap
 
 		private bool isAttacking = false;
 		private bool isMoving = false;
+		public GoapAgent agent;
+		public List<GoapGoal> goals;
+		public List<GoapAction> actions;
 
 		public override void _Ready()
 		{
 			_hungryLabel = GetNode<Label>(HungryLabelPath);
 			_body = GetNode<AnimatedSprite2D>(BodyPath);
 			_calmDownTimer = GetNode<Timer>(CalmDownTimerPath);
-			GoapGoal[] goals = new GoapGoal[]
+			agent = GetNode<GoapAgent>(AgentPath) as GoapAgent;
+			goals = new List<GoapGoal>();
+			actions = new List<GoapAction>();
+			foreach (var goal in GetNode<Node>("agent/goals").GetChildren())
 			{
-				new KeepFirepitBurningGoal(),
-				new KeepFedGoal(),
-				new CalmDownGoal(),
-				new RelaxGoal()
-			};
-			GoapAgent agent = new GoapAgent(this,goals);
-
+				GD.Print(goal);
+				goals.Add(goal as GoapGoal);
+			}
+			foreach (var action in GetNode<Node>("agent/actions").GetChildren())
+			{
+				GD.Print(action);
+				actions.Add(action as GoapAction);
+			}
+			agent.SetGoals(goals);
+			agent.SetActions(actions);
 			
-			AddChild(agent);
 		}
 
 		public override void _Process(double delta)
 		{
-			_hungryLabel.Visible = Convert.ToInt32(WorldState.Instance.GetState("hunger", 0)) >= 50;
+			_hungryLabel.Visible = Convert.ToInt32(agent.GetState("hunger", 0)) >= 50;
 
 			if (isAttacking)
 			{

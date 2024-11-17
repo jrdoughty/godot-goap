@@ -15,10 +15,7 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "C#")
 config/icon="res://icon.png"
 
-[autoload]
 
-WorldState="*res://world/world_state.gd"
-Goap="*res://goap/goap.gd"
 
 [display]
 

@@ -12,13 +12,13 @@ namespace CSGoap
         }
 
         // Relax will always be available
-        public override bool IsValid()
+        public override bool IsValid(GoapAgent agent)
         {
             return true;
         }
 
         // Relax has lower priority compared to other goals
-        public override int Priority()
+        public override int Priority(GoapAgent agent)
         {
             return 0;
         }

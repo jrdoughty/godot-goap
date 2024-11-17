@@ -11,12 +11,12 @@ namespace CSGoap
             return "KeepFirepitBurningGoal";
         }
 
-        public override bool IsValid()
+        public override bool IsValid(GoapAgent agent)
         {
 	        return WorldState.Instance.GetElements("firepit").Count == 0;
         }
 
-        public override int Priority()
+        public override int Priority(GoapAgent agent)
         {
             return 5;
         }

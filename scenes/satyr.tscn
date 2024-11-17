@@ -1,7 +1,18 @@
-[gd_scene load_steps=18 format=3 uid="uid://cr6noovmcl47a"]
+[gd_scene load_steps=29 format=3 uid="uid://cr6noovmcl47a"]
 
 [ext_resource type="Texture2D" uid="uid://bhj005yas3d7l" path="res://sprites/satyr_.png" id="1"]
 [ext_resource type="Script" path="res://scenes/Satyr.cs" id="1_vr8rg"]
+[ext_resource type="Script" path="res://goap/GoapAgent.cs" id="3_4kha1"]
+[ext_resource type="Script" path="res://goap/goals/RelaxGoal.cs" id="4_3524b"]
+[ext_resource type="Script" path="res://goap/actions/BuildFirepitAction.cs" id="4_pbcrh"]
+[ext_resource type="Script" path="res://goap/goals/CalmDownGoal.cs" id="5_71xj1"]
+[ext_resource type="Script" path="res://goap/actions/CalmDownAction.cs" id="5_su5xh"]
+[ext_resource type="Script" path="res://goap/goals/KeepFedGoal.cs" id="6_ehvld"]
+[ext_resource type="Script" path="res://goap/actions/ChopTreeAction.cs" id="6_fbdyq"]
+[ext_resource type="Script" path="res://goap/goals/KeepFirepitBurningGoal.cs" id="7_cxw0w"]
+[ext_resource type="Script" path="res://goap/actions/CollectFromWoodStockAction.cs" id="7_lxspg"]
+[ext_resource type="Script" path="res://goap/actions/FindCoverAction.cs" id="8_1onnj"]
+[ext_resource type="Script" path="res://goap/actions/FindFoodAction.cs" id="9_wjb01"]
 
 [sub_resource type="AtlasTexture" id="9"]
 atlas = ExtResource("1")
@@ -119,6 +130,7 @@ script = ExtResource("1_vr8rg")
 HungryLabelPath = NodePath("labels/labels/hungry_label")
 BodyPath = NodePath("body")
 CalmDownTimerPath = NodePath("calm_down_timer")
+AgentPath = NodePath("agent")
 
 [node name="body" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -164,6 +176,43 @@ text = "Hungry"
 visible = false
 layout_mode = 2
 text = "Afraid"
+
+[node name="agent" type="Node" parent="."]
+script = ExtResource("3_4kha1")
+
+[node name="actions" type="Node" parent="agent"]
+
+[node name="build_fire" type="Node" parent="agent/actions"]
+script = ExtResource("4_pbcrh")
+
+[node name="calm_down" type="Node" parent="agent/actions"]
+script = ExtResource("5_su5xh")
+
+[node name="chop_tree" type="Node" parent="agent/actions"]
+script = ExtResource("6_fbdyq")
+
+[node name="collect_wood_stock" type="Node" parent="agent/actions"]
+script = ExtResource("7_lxspg")
+
+[node name="find_cover" type="Node" parent="agent/actions"]
+script = ExtResource("8_1onnj")
+
+[node name="find_food" type="Node" parent="agent/actions"]
+script = ExtResource("9_wjb01")
+
+[node name="goals" type="Node" parent="agent"]
+
+[node name="relax" type="Node" parent="agent/goals"]
+script = ExtResource("4_3524b")
+
+[node name="calm_down" type="Node" parent="agent/goals"]
+script = ExtResource("5_71xj1")
+
+[node name="keep_fed" type="Node" parent="agent/goals"]
+script = ExtResource("6_ehvld")
+
+[node name="keep_fire_burning" type="Node" parent="agent/goals"]
+script = ExtResource("7_cxw0w")
 
 [connection signal="body_entered" from="detection_radius" to="." method="OnDetectionRadiusBodyEntered"]
 [connection signal="timeout" from="calm_down_timer" to="." method="OnCalmDownTimerTimeout"]

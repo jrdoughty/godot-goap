@@ -40,8 +40,8 @@ namespace CSGoap
 
             if (closestFood.Position.DistanceTo(actor.Position) < 5)
             {
-                double hunger = (double)WorldState.Instance.GetState("hunger");
-                WorldState.Instance.SetState("hunger", hunger - (closestFood as Mushroom).nutrition);
+                double hunger = (double)((actor as Satyr).agent.GetState("hunger"));
+                (actor as Satyr).agent.SetState("hunger", hunger - (closestFood as Mushroom).nutrition);
                 closestFood.QueueFree();
                 return true;
             }

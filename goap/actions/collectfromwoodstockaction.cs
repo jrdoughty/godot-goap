@@ -12,7 +12,7 @@ namespace CSGoap
 			return "CollectFromWoodStockAction";
 		}
 
-		public override bool IsValid()
+		public override bool IsValid(GoapAgent agent)
 		{
 			return WorldState.Instance.GetElements("wood_stock").Count > 0;
 		}

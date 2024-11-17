@@ -12,14 +12,14 @@ namespace CSGoap
         }
 
         // This is not a valid goal when hunger is less than 50.
-        public override bool IsValid()
+        public override bool IsValid(GoapAgent agent)
         {
-            return Convert.ToInt32(WorldState.Instance.GetState("hunger", 0)) > 50 && WorldState.Instance.GetElements("food").Count > 0;
+            return Convert.ToInt32(agent.GetState("hunger", 0)) > 50 && WorldState.Instance.GetElements("food").Count > 0;
         }
 
-        public override int Priority()
+        public override int Priority(GoapAgent agent)
         {
-            return Convert.ToInt32(WorldState.Instance.GetState("hunger", 0)) < 75 ? 1 : 2;
+            return Convert.ToInt32(agent.GetState("hunger", 0)) < 75 ? 1 : 2;
         }
 
         public override Dictionary<object, object> GetDesiredState()

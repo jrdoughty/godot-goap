@@ -10,12 +10,12 @@ namespace CSGoap
             return "CalmDownGoal";
         }
 
-        public override bool IsValid()
+        public override bool IsValid(GoapAgent agent)
         {
             return (bool)WorldState.Instance.GetState("is_frightened", false);
         }
 
-        public override int Priority()
+        public override int Priority(GoapAgent agent)
         {
             return 10;
         }

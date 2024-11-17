@@ -6,17 +6,48 @@ namespace CSGoap
 
 	public partial class GoapAgent : Node
 	{
-		private GoapGoal[] goals;
+		private List<GoapGoal> goals;
 		private GoapGoal currentGoal;
 		private List<GoapAction> currentPlan;
 		private int currentPlanStep = 0;
 		private Node2D actor;
 
+		public List<GoapAction> actions;
 		public Dictionary<object, object> state = new Dictionary<object, object>();
 
-		public GoapAgent(Node2D actor, GoapGoal[] goals)
+
+		public void SetActions(List<GoapAction> actions)
 		{
-			this.actor = actor;
+			this.actions = actions;
+			GD.Print("Actions set");
+		}
+
+		public object GetState(object key, object defaultValue = null)
+		{
+			if (state.ContainsKey(key))
+			{
+				return state[key];
+			}
+			else if (defaultValue != null)
+			{
+				state[key] = defaultValue;
+			}
+						
+			return defaultValue;
+		}
+
+		public void SetState(object key, object value)
+		{
+			state[key] = value;
+		}
+
+
+		public override void _Ready()
+		{
+			actor = GetParent<Node2D>();
+		}
+		public void SetGoals(List<GoapGoal> goals)
+		{
 			this.goals = goals;
 		}
 
@@ -41,8 +72,7 @@ namespace CSGoap
 
 			foreach (GoapGoal goal in goals)
 			{
-				//GD.Print($"Best goal: {goal.GetClazz()} {goal.IsValid()}");
-				if (goal.IsValid() && (highestPriority == null || goal.Priority() > highestPriority.Priority()))
+				if (goal.IsValid(this) && (highestPriority == null || goal.Priority(this) > highestPriority.Priority(this)))
 				{
 					highestPriority = goal;
 				}

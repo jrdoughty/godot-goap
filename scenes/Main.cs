@@ -5,22 +5,24 @@ namespace CSGoap
 
     public partial class Main : Node2D
     {
-        private ProgressBar _hungerField;
+        private ProgressBar hungerField;
+        public GoapAgent agent;
 
         public override void _Ready()
         {
-            _hungerField = GetNode<ProgressBar>("HUD/VBoxContainer/MarginContainer/HBoxContainer/hunger");
+            hungerField = GetNode<ProgressBar>("HUD/VBoxContainer/MarginContainer/HBoxContainer/hunger");
+            agent = GetNode<Satyr>("satyr").agent;
         }
 
         private void OnHungerTimerTimeout()
         {
-            _hungerField.Value = Convert.ToInt32(WorldState.Instance.GetState("hunger", 0));
-            if (_hungerField.Value < 100)
+            hungerField.Value = Convert.ToInt32(agent.GetState("hunger", 0));
+            if (hungerField.Value < 100)
             {
-                _hungerField.Value += 2;
+                hungerField.Value += 2;
             }
 
-            WorldState.Instance.SetState("hunger", _hungerField.Value);
+            agent.SetState("hunger", hungerField.Value);
         }
 
         private void OnReloadPressed()

@@ -10,13 +10,6 @@ namespace CSGoap
 
     public partial class GoapActionPlanner : Node
 	{
-		private GoapAction[] actions;
-
-		public void SetActions(GoapAction[] actions)
-		{
-			this.actions = actions;
-			GD.Print("Actions set");
-		}
 
 
 		public Dictionary<object, object> GetCombinedState(GoapAgent agent)
@@ -38,7 +31,6 @@ namespace CSGoap
 
 		public List<GoapAction> GetPlan(GoapGoal goal, GoapAgent agent)
 		{
-			Dictionary<object, object> blackboard = GetCombinedState(agent);
 
 			WorldState.Instance.ConsoleMessage($"Goal: {goal.GetClazz()}");
 
@@ -48,12 +40,12 @@ namespace CSGoap
 			{
 				return new List<GoapAction>();
 			}
-			var plan = FindBestPlan(goal, desiredState, blackboard);
+			var plan = FindBestPlan(goal, desiredState, agent);
 			PrintPlan(plan);
 			return plan;
 		}
 
-		private List<GoapAction> FindBestPlan(GoapGoal goal, Dictionary<object, object> desiredState, Dictionary<object, object> blackboard)
+		private List<GoapAction> FindBestPlan(GoapGoal goal, Dictionary<object, object> desiredState, GoapAgent agent)
 		{
 			var root = new Dictionary<object, object>
 			{
@@ -61,8 +53,9 @@ namespace CSGoap
 				{ "state", desiredState },
 				{ "children", new List<Dictionary<object, object>>() }
 			};
+			Dictionary<object, object> blackboard = GetCombinedState(agent);
 
-			if (BuildPlans(root, new Dictionary<object, object>(blackboard)))
+			if (BuildPlans(root, blackboard, agent))
 			{
 				return ExtractPlan(root);
 			}
@@ -70,7 +63,7 @@ namespace CSGoap
 			return new List<GoapAction>();
 		}
 
-		private bool BuildPlans(Dictionary<object, object> root, Dictionary<object, object> blackboard)
+		private bool BuildPlans(Dictionary<object, object> root, Dictionary<object, object> blackboard, GoapAgent agent)
 		{
 			GD.Print("Building plans");
 			bool hasFollowUp = false;
@@ -88,9 +81,9 @@ namespace CSGoap
 			{
 				return true;
 			}
-			foreach (GoapAction a in this.actions)
+			foreach (GoapAction a in agent.actions)
 			{
-				if (!a.IsValid())
+				if (!a.IsValid(agent))
 				{
 					continue;
 				}
@@ -123,7 +116,7 @@ namespace CSGoap
 					{
 						GD.Print($"Desired state: {d.Key} {d.Value}");
 					}
-					if(desiredState.Count == 0 || BuildPlans(s, new Dictionary<object, object>(blackboard)))
+					if(desiredState.Count == 0 || BuildPlans(s, new Dictionary<object, object>(blackboard), agent))
 					{
 						(root["children"] as List<Dictionary<object, object>>).Add(s);
 						hasFollowUp = true;

@@ -20,7 +20,7 @@ namespace CSGoap
         // not even consider the goal. i.e. Ignore combat related goals
         // when there are not enemies nearby.
         //
-        public virtual bool IsValid()
+        public virtual bool IsValid(GoapAgent agent)
         {
             return true;
         }
@@ -28,7 +28,7 @@ namespace CSGoap
         // Returns goals priority. This priority can be dynamic. Check
         // `./goals/keep_fed.gd` for an example of dynamic priority.
         //
-        public virtual int Priority()
+        public virtual int Priority(GoapAgent agent)
         {
             return 1;
         }

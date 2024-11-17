@@ -21,7 +21,7 @@ namespace CSGoap
         // also be used during execution to abort the plan in case the world state
         // does not allow this action anymore.
         //
-        public virtual bool IsValid()
+        public virtual bool IsValid(GoapAgent agent)
         {
             return true;
         }
@@ -30,7 +30,7 @@ namespace CSGoap
         // Action Cost. This is a functiontion so it handles situational costs, when the world
         // state is considered when calculating the cost.
         //
-        // Check "./actions/chop_tree.gd" for a situational cost example.
+        // Check "./actions/choptreeaction.cs" for a situational cost example.
         //
         public virtual int GetCost(Dictionary<object, object> blackboard)
         {

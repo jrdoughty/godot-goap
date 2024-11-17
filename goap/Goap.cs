@@ -32,14 +32,6 @@ namespace CSGoap
 
 		public Goap()
 		{
-			actionPlanner.SetActions(new GoapAction[] {
-				new BuildFirepitAction(),
-				new ChopTreeAction(),
-				new CollectFromWoodStockAction(),
-				new CalmDownAction(),
-				new FindCoverAction(),
-				new FindFoodAction()
-			});
 		}
 
 		public GoapActionPlanner GetActionPlanner()

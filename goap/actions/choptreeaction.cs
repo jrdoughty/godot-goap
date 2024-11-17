@@ -13,7 +13,7 @@ namespace CSGoap
 			return "ChopTreeAction";
 		}
 
-		public override bool IsValid()
+		public override bool IsValid(GoapAgent agent)
 		{
 			return WorldState.Instance.GetElements("tree").Count > 0;
 		}
