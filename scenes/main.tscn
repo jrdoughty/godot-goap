@@ -4378,8 +4378,11 @@ nutrition = 10
 [node name="mushroom6" parent="." instance=ExtResource("7")]
 position = Vector2(187, 251)
 
-[node name="satyr" parent="." instance=ExtResource("4")]
+[node name="satyr" parent="." groups=["satyr"] instance=ExtResource("4")]
 position = Vector2(165.003, 153.876)
+
+[node name="satyr2" parent="." groups=["satyr"] instance=ExtResource("4")]
+position = Vector2(93, 65)
 
 [node name="troll" parent="." instance=ExtResource("3")]
 position = Vector2(72, 33)
