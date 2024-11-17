@@ -18,15 +18,28 @@ namespace CSGoap
 			GD.Print("Actions set");
 		}
 
-		public List<GoapAction> GetPlan(GoapGoal goal, Dictionary<object, object> blackboard = null)
-		{
-			GD.Print("planning!");
-			if (blackboard == null)
-			{
-				blackboard = new Dictionary<object, object>();
-			}
 
-			GD.Print($"Goal: {goal.GetClazz()}");
+		public Dictionary<object, object> GetCombinedState(GoapAgent agent)
+		{
+			Dictionary<object, object> combinedState = new Dictionary<object, object>(WorldState.Instance.state);
+			foreach (KeyValuePair<object, object> s in agent.state)
+			{
+				if (combinedState.ContainsKey(s.Key))
+				{
+					combinedState[s.Key] = s.Value;
+				}
+				else
+				{
+					combinedState.Add(s.Key, s.Value);
+				}
+			}
+			return combinedState;
+		}
+
+		public List<GoapAction> GetPlan(GoapGoal goal, GoapAgent agent)
+		{
+			Dictionary<object, object> blackboard = GetCombinedState(agent);
+
 			WorldState.Instance.ConsoleMessage($"Goal: {goal.GetClazz()}");
 
 			Dictionary<object, object> desiredState = new Dictionary<object, object>(goal.GetDesiredState());
@@ -143,10 +156,12 @@ namespace CSGoap
 
 		public void PrintPlan(List<GoapAction> plan)
 		{
+			String planString = "Plan: ";
 			foreach (GoapAction a in plan)
 			{
-				GD.Print("Print plan"+a.GetClazz());
+				planString += a.GetClazz() + " "+ a.GetCost(null) + " ";
 			}
+				WorldState.Instance.ConsoleMessage(planString);
 		}
 	}
 }

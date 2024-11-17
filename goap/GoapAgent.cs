@@ -12,6 +12,8 @@ namespace CSGoap
 		private int currentPlanStep = 0;
 		private Node2D actor;
 
+		public Dictionary<object, object> state = new Dictionary<object, object>();
+
 		public GoapAgent(Node2D actor, GoapGoal[] goals)
 		{
 			this.actor = actor;
@@ -23,15 +25,8 @@ namespace CSGoap
 			GoapGoal goal = GetBestGoal();
 			if (currentGoal == null || goal != currentGoal)
 			{
-				Dictionary<object, object> blackboard = new Dictionary<object, object>
-				{
-					{ "position", actor.Position }
-				};
-
-				blackboard = new Dictionary<object, object>(WorldState.Instance.state);
-
 				currentGoal = goal;
-				currentPlan = Goap.Instance.GetActionPlanner().GetPlan(currentGoal, blackboard);
+				currentPlan = Goap.Instance.GetActionPlanner().GetPlan(currentGoal, this);
 				currentPlanStep = 0;
 			}
 			else

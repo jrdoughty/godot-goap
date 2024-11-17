@@ -20,7 +20,7 @@ namespace CSGoap
 
 		public override int GetCost(Dictionary<object, object> blackboard)
 		{
-			if (blackboard.ContainsKey("position"))
+			if (blackboard != null && blackboard.ContainsKey("position"))
 			{
 				Node2D closestTree = WorldState.Instance.GetClosestElement("tree", (Node2D)blackboard["position"]) as Node2D;
 				return Convert.ToInt32(closestTree.Position.DistanceTo(((Node2D)blackboard["position"]).Position) / 7);
